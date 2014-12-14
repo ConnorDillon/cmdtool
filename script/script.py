@@ -1,11 +1,10 @@
-import subprocess
 import logging
 import logging.handlers
 import argparse
-import base_script
+from .base_script import BaseScript
 
 
-class Script(base_script.BaseScript):
+class Script(BaseScript):
     def __init__(self, name, description, log_output='console', log_level='info', log_format='%(message)s'):
         if log_output == 'console':
             log_handler = logging.StreamHandler()
@@ -38,4 +37,6 @@ class Script(base_script.BaseScript):
     def script(self):
         raise NotImplementedError
 
-
+    def run(self):
+        self.args = self.parser.parse_args()
+        super().run()

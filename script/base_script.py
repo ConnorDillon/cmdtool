@@ -9,6 +9,7 @@ class BaseScript:
         self.log = log
         self.parser = parser
         self.args = None
+        self.params = {}
 
     @staticmethod
     def fmt_exception(exception):
@@ -39,15 +40,31 @@ class BaseScript:
     def script(self):
         raise NotImplementedError
 
+    def rollback(self):
+        self.error('rollback function not implemented')
+
     def run(self):
-        self.args = self.parser.parse_args()
+        self.params.update(self.args.__dict__)
         self.debug('starting script: ' + self.name)
         try:
             self.script()
         except Exception as e:
             self.error(self.fmt_exception(e))
+            self.error('rolling back')
+            try:
+                self.rollback()
+            except Exception as e:
+                self.error(self.fmt_exception(e))
+                self.error('rolling back failed')
         finally:
             self.debug('stopping script: ' + self.name)
+
+    def format(self, string):
+        return string.format(**self.params)
+
+    def sh(self, command):
+        return subprocess.check_output(self.format(command),
+                                       stderr=subprocess.STDOUT, shell=True).decode()
 
     def __call__(self):
         self.run()
