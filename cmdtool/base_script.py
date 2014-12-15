@@ -10,6 +10,7 @@ class BaseScript:
         self.parser = parser
         self.args = None
         self.params = {}
+        self.testmode = False
 
     @staticmethod
     def fmt_exception(exception):
@@ -63,8 +64,11 @@ class BaseScript:
         return string.format(**self.params)
 
     def sh(self, command):
-        return subprocess.check_output(self.format(command),
-                                       stderr=subprocess.STDOUT, shell=True).decode()
+        if self.testmode:
+            self.info(self.format(command))
+        else:
+            return subprocess.check_output(self.format(command),
+                                           stderr=subprocess.STDOUT, shell=True).decode()
 
     def __call__(self):
         self.run()
