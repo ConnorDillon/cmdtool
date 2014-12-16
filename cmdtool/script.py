@@ -5,7 +5,8 @@ from .base_script import BaseScript
 
 
 class Script(BaseScript):
-    def __init__(self, name, description, log_output='console', log_level='info', log_format='%(message)s'):
+    def __init__(self, name, description, *args, log_output='console',
+                 log_level='info', log_format='%(message)s', **kwargs):
         if log_output == 'console':
             log_handler = logging.StreamHandler()
         elif log_output == 'syslog':
@@ -32,7 +33,7 @@ class Script(BaseScript):
 
         parser = argparse.ArgumentParser(description=description)
 
-        super().__init__(name, description, log, parser)
+        super().__init__(name, description, log, parser, *args, **kwargs)
 
     def script(self):
         raise NotImplementedError

@@ -2,8 +2,8 @@ from .script import Script
 
 
 class Superscript(Script):
-    def __init__(self, name, description, subscripts, log_output='console', log_level='info', log_format='%(message)s'):
-        super().__init__(name, description, log_output, log_level, log_format)
+    def __init__(self, subscripts, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.subparsers = self.parser.add_subparsers(dest="command")
         self.subscripts = {}
         for scriptclass in subscripts:

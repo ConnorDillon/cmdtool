@@ -3,14 +3,14 @@ import traceback
 
 
 class BaseScript:
-    def __init__(self, name, description, log, parser):
+    def __init__(self, name, description, log, parser, testmode=False):
         self.name = name
         self.description = description
         self.log = log
         self.parser = parser
         self.args = None
         self.params = {}
-        self.testmode = False
+        self.testmode = testmode
 
     @staticmethod
     def fmt_exception(exception):

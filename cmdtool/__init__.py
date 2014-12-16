@@ -1,13 +1,7 @@
-import subprocess
-
-
-__all__ = ['Script', 'Subscript', 'Superscript', 'sh']
+__all__ = ['Script', 'Subscript', 'Superscript', 'ToList']
 
 
 from .script import Script
 from .subscript import Subscript
 from .superscript import Superscript
-
-
-def sh(command):
-    return subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True).decode()
+from .actions import ToList
