@@ -5,13 +5,13 @@ from .base_script import BaseScript
 
 
 class Script(BaseScript):
-    def __init__(self, name, description, *args, log_output='console',
-                 log_level='info', log_format='%(message)s', **kwargs):
+    def __init__(self, name, description, *args, log_output='console', log_level='info',
+                 log_format='%(message)s', log_dateformat='%b %d %H:%M:%S', **kwargs):
         if log_output == 'console':
             log_handler = logging.StreamHandler()
         elif log_output == 'syslog':
             log_handler = logging.handlers.SysLogHandler(address='/dev/log',
-                                                         facility=logging.handlers.SysLogHandler.LOG_CRON)
+                                                         facility=logging.handlers.SysLogHandler.LOG_USER)
         else:
             raise AssertionError
 
@@ -26,7 +26,7 @@ class Script(BaseScript):
         else:
             raise AssertionError
 
-        log_handler.setFormatter(logging.Formatter(log_format))
+        log_handler.setFormatter(logging.Formatter(log_format, datefmt=log_dateformat))
         log = logging.getLogger(__name__)
         log.setLevel(real_log_level)
         log.addHandler(log_handler)
