@@ -60,6 +60,8 @@ class BaseScript:
         if self.testmode:
             print(self.format(command))
         else:
+            if self.log.level == logging.DEBUG:
+                self.debug('executing command: ' + command)
             return subprocess.check_output(self.format(command),
                                            stderr=subprocess.STDOUT, shell=True).decode()
 
