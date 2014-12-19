@@ -1,4 +1,5 @@
 import subprocess
+import threading
 import traceback
 import logging
 
@@ -12,6 +13,7 @@ class BaseScript:
         self.args = None
         self.params = {}
         self.testmode = testmode
+        self.threads = []
 
     def fmt_exception(self, exception):
         if isinstance(exception, subprocess.CalledProcessError):
@@ -51,7 +53,16 @@ class BaseScript:
         except Exception as e:
             self.error(self.fmt_exception(e))
         finally:
+            if self.threads:
+                self.debug('waiting for completion of threads of: ' + self.name)
+                for t in self.threads:
+                    t.join()
             self.debug('stopping script: ' + self.name)
+
+    def run_thread(self, fn, *args, **kwargs):
+        t = threading.Thread(target=fn, args=args, kwargs=kwargs)
+        t.start()
+        self.threads.append(t)
 
     def format(self, string):
         return string.format(**self.params)

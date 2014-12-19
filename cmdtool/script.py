@@ -35,9 +35,6 @@ class Script(BaseScript):
 
         super().__init__(name, description, log, parser, *args, **kwargs)
 
-    def script(self):
-        raise NotImplementedError
-
     def run(self):
         self.args = self.parser.parse_args()
         super().run()
