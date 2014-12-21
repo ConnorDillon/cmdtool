@@ -36,7 +36,7 @@ class BaseScript:
 
     def fmt_exception(self, exception):
         if isinstance(exception, subprocess.CalledProcessError):
-            error = exception.output.decode()
+            error = 'cmd: ({0}) msg: {1}'.format(exception.cmd, exception.output.decode())
         else:
             error = str(exception)
         if self.log.level == logging.DEBUG:
@@ -83,7 +83,12 @@ class BaseScript:
             self.debug('stopping script: ' + self.name)
 
     def run_thread(self, fn, *args, **kwargs):
-        t = threading.Thread(target=fn, args=args, kwargs=kwargs)
+        def try_fn():
+            try:
+                fn(*args, **kwargs)
+            except Exception as e:
+                self.error(self.fmt_exception(e))
+        t = threading.Thread(target=try_fn)
         t.start()
         self.threads.append(t)
 
