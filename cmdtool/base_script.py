@@ -5,15 +5,34 @@ import logging
 
 
 class BaseScript:
-    def __init__(self, name, description, log, parser, testmode=False):
+    def __init__(self, name, description, log, parser):
         self.name = name
         self.description = description
         self.log = log
         self.parser = parser
         self.args = None
         self.params = {}
-        self.testmode = testmode
+        self.testmode = False
         self.threads = []
+
+        self.add_arg('--loglevel', choices=['debug', 'info', 'warning', 'error'], default='info')
+        self.add_arg('--testmode', action='store_true')
+
+    def set_testmode(self):
+        self.testmode = True
+        self.set_loglevel('debug')
+
+    def set_loglevel(self, level):
+        if level == 'debug':
+            self.log.setLevel(logging.DEBUG)
+        elif level == 'info':
+            self.log.setLevel(logging.INFO)
+        elif level == 'warning':
+            self.log.setLevel(logging.WARNING)
+        elif level == 'error':
+            self.log.setLevel(logging.ERROR)
+        else:
+            raise AssertionError
 
     def fmt_exception(self, exception):
         if isinstance(exception, subprocess.CalledProcessError):
@@ -46,7 +65,11 @@ class BaseScript:
         raise NotImplementedError
 
     def run(self):
-        self.params.update(self.args.__dict__)
+        if self.args.loglevel:
+            self.set_loglevel(self.args.loglevel)
+        if self.args.testmode:
+            self.set_testmode()
+        self.params.update(vars(self.args))
         self.debug('starting script: ' + self.name)
         try:
             self.script()
