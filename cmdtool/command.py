@@ -1,9 +1,9 @@
 import logging
 import argparse
-from .end_script import EndScript
+from .end_command import EndCommand
 
 
-class Script(EndScript):
+class Command(EndCommand):
     def __init__(self, name, description, *args, **kwargs):
         log = logging.getLogger(__name__)
         parser = argparse.ArgumentParser(description=description)

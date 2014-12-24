@@ -3,10 +3,10 @@ import logging.handlers
 import subprocess
 import traceback
 import threading
-from .base_script import BaseScript
+from .base_command import BaseCommand
 
 
-class EndScript(BaseScript):
+class EndCommand(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.threads = []

@@ -1,7 +1,7 @@
-from .end_script import EndScript
+from .end_command import EndCommand
 
 
-class Subscript(EndScript):
+class SubCommand(EndCommand):
     def __init__(self, name, superscript):
         parser = superscript.subparsers.add_parser(name)
         super().__init__(superscript.name + '/' + name, superscript.description, parser,

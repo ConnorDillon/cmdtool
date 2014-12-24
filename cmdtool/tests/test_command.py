@@ -1,9 +1,9 @@
 import unittest
 from .test_log import TestLog
-from cmdtool import Script
+from cmdtool import Command
 
 
-class SomeScript(Script):
+class SomeCommand(Command):
     def __init__(self):
         super().__init__('test', 'a test script', log_fmt='%(levelname)s: %(message)s')
         self.add_arg('derp')
@@ -15,13 +15,13 @@ class SomeScript(Script):
         self.error(shell_output)
 
 
-class TestScript(unittest.TestCase):
+class TestCommand(unittest.TestCase):
     def setUp(self):
-        self.script = SomeScript()
+        self.command = SomeCommand()
 
     def test_script(self):
         with TestLog() as log:
-            self.script.parse_args('herpdaderpa --console'.split())
-            self.script()
+            self.command.parse_args('herpdaderpa --console'.split())
+            self.command()
             expected = ['INFO: herpdaderpa\n', '\n', 'WARNING: herpdaderpa\n', '\n', 'ERROR: herpdaderpa\n', '\n']
             self.assertEqual(log, expected)

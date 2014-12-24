@@ -1,4 +1,4 @@
-class BaseScript:
+class BaseCommand:
     def __init__(self, name, description, parser, log, log_fmt=None, log_datefmt=None):
         self.name = name
         self.description = description

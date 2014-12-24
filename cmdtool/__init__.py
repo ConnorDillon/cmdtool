@@ -1,7 +1,7 @@
-__all__ = ['Script', 'Subscript', 'Superscript', 'ToList']
+__all__ = ['Command', 'SubCommand', 'SuperCommand', 'ToList']
 
 
-from .script import Script
-from .subscript import Subscript
-from .superscript import Superscript
+from .command import Command
+from .sub_command import SubCommand
+from .super_command import SuperCommand
 from .actions import ToList

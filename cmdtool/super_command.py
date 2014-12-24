@@ -1,9 +1,9 @@
 import logging
 import argparse
-from .base_script import BaseScript
+from .base_command import BaseCommand
 
 
-class Superscript(BaseScript):
+class SuperCommand(BaseCommand):
     def __init__(self, name, description, subscripts, *args, **kwargs):
         log = logging.getLogger(__name__)
         parser = argparse.ArgumentParser(description=description)

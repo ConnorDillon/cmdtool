@@ -1,14 +1,14 @@
 from unittest import TestCase
 from .test_log import TestLog
-from cmdtool import Superscript, Subscript
+from cmdtool import SuperCommand, SubCommand
 
 
-class SomeSuperscript(Superscript):
+class SomeSuperCommand(SuperCommand):
     def __init__(self):
-        super().__init__('test', 'test lalalal', subscripts=[SomeSubscript])
+        super().__init__('test', 'test lalalal', subscripts=[SomeSubCommand])
 
 
-class SomeSubscript(Subscript):
+class SomeSubCommand(SubCommand):
     def __init__(self, superscript):
         super().__init__('subtest', superscript)
         self.add_arg('bla')
@@ -17,12 +17,12 @@ class SomeSubscript(Subscript):
         self.info('{bla}')
 
 
-class TestSuperscript(TestCase):
+class TestSuperCommand(TestCase):
     def setUp(self):
-        self.script = SomeSuperscript()
+        self.command = SomeSuperCommand()
 
     def test_script(self):
         with TestLog() as log:
-            self.script.parse_args('subtest lalala --console'.split())
-            self.script()
+            self.command.parse_args('subtest lalala --console'.split())
+            self.command()
             self.assertEqual(log, ['lalala', '\n'])
