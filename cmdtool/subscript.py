@@ -1,10 +1,8 @@
-from .base_script import BaseScript
+from .end_script import EndScript
 
 
-class Subscript(BaseScript):
-    def __init__(self, name, superscript, parent_parsers=None):
-        if parent_parsers is None:
-            parent_parsers = []
-        parser = superscript.subparsers.add_parser(name, parents=parent_parsers)
-        super().__init__(superscript.name + '/' + name, superscript.description,
-                         superscript.log, parser)
+class Subscript(EndScript):
+    def __init__(self, name, superscript):
+        parser = superscript.subparsers.add_parser(name)
+        super().__init__(superscript.name + '/' + name, superscript.description, parser,
+                         superscript.log, superscript.log_fmt, superscript.log_datefmt)
