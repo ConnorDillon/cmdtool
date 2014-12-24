@@ -9,4 +9,5 @@ setup(name='cmdtool',
       author_email='connor@cdillon.nl',
       license='GPLv3',
       packages=['cmdtool'],
+      test_suite='cmdtool.tests',
       zip_safe=False)
