@@ -3,7 +3,7 @@ import logging.handlers
 import subprocess
 import traceback
 import threading
-from .base_script2 import BaseScript
+from .base_script import BaseScript
 
 
 class EndScript(BaseScript):
