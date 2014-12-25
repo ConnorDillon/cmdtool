@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(name='cmdtool',
-      version='0.1.1',
+      version='0.2rc1',
       description='A very basic framework for writing command line tools',
       url='https://github.com/ConnorDillon/cmdtool',
       author='Connor Dillon',
