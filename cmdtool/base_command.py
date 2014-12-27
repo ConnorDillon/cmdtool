@@ -10,7 +10,7 @@ class BaseCommand:
 
     def parse_args(self, args=None):
         if args:
-            self.args = self.parser.parse_args(args)
+            self.args = self.parser.parse_args(args.split())
         else:
             self.args = self.parser.parse_args()
 
