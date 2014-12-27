@@ -14,8 +14,7 @@ class SuperCommand(BaseCommand):
             subscript = scriptclass(self)
             self.subscripts[subscript.name] = subscript
 
-    def run(self):
-        super().run()
+    def run(self, args=None):
+        super().run(args)
         subscript = self.subscripts[self.name + '/' + self.args.command]
-        subscript.args = self.args
-        subscript()
+        subscript(self.args)

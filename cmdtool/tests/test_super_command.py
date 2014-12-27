@@ -23,6 +23,5 @@ class TestSuperCommand(TestCase):
 
     def test_script(self):
         with TestLog() as log:
-            self.command.parse_args('subtest lalala --console')
-            self.command()
+            self.command('subtest lalala --console')
             self.assertEqual(log, ['lalala', '\n'])

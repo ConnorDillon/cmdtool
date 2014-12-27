@@ -82,8 +82,8 @@ class EndCommand(BaseCommand):
             self.debug('executing command: ' + cmd)
             return subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True).decode()
 
-    def run(self):
-        super().run()
+    def run(self, args=None):
+        super().run(args)
         self.set_loghandler()
         self.set_loglevel()
         self.set_testmode()

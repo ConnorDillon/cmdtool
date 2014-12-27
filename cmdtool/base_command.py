@@ -8,15 +8,13 @@ class BaseCommand:
         self.log_datefmt = log_datefmt
         self.args = None
 
-    def parse_args(self, args=None):
-        if args:
+    def run(self, args=None):
+        if isinstance(args, str):
             self.args = self.parser.parse_args(args.split())
+        elif args:
+            self.args = args
         else:
             self.args = self.parser.parse_args()
 
-    def run(self):
-        if not self.args:
-            self.parse_args()
-
-    def __call__(self):
-        self.run()
+    def __call__(self, args=None):
+        self.run(args)

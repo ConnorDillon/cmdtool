@@ -21,7 +21,6 @@ class TestCommand(unittest.TestCase):
 
     def test_script(self):
         with TestLog() as log:
-            self.command.parse_args('herpdaderpa --console')
-            self.command()
+            self.command('herpdaderpa --console')
             expected = ['INFO: herpdaderpa\n', '\n', 'WARNING: herpdaderpa\n', '\n', 'ERROR: herpdaderpa\n', '\n']
             self.assertEqual(log, expected)
