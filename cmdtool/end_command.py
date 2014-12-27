@@ -53,8 +53,11 @@ class EndCommand(BaseCommand):
 
         handler.setFormatter(logging.Formatter(fmt=self.log_fmt, datefmt=self.log_datefmt))
 
-        assert not self.log.handlers
-        self.log.addHandler(handler)
+        if not self.log.handlers:
+            self.log.addHandler(handler)
+        else:
+            assert len(self.log.handlers) == 1
+            self.log.handlers[0] = handler
 
     def debug(self, msg):
         self.log.debug(self.format(msg))
